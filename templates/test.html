@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .container p {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>查找关键词: <input type="text" id="keyword" name="words" style="width: 300px" /></p>
+    <p>上传文件：<input type="file" id="image" name="image_body"></p>
+    <p><button id="submit">提交</button></p>
+    <div class="result"></div>
+  </div>
+  <script>
+    let submitDom = document.querySelector('#submit')
+    let keywordDom = document.querySelector('#keyword')
+    let fileInputDom = document.querySelector('#image')
+    let resultDom = document.querySelector('.result')
+    function handleSubmit(e) {
+        resultDom.innerHTML=""
+      let words = keywordDom.value
+      let file = fileInputDom.files[0]
+      let formData = new FormData()
+        console.log(words)
+        if (words){
+          formData.append('words', words)
+        }
+      formData.append('image_body', file)
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', "{{ url }}", true);
+      xhr.send(formData)
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState==4 && xhr.status==200){
+          let response = JSON.parse(xhr.response)
+          console.log(response)
+          if (response.status === 'not found') {
+            resultDom.innerHTML = `<p><strong style="color:red;">未找到</strong></p>`
+          }
+          if (response.status === 'success') {
+            resultDom.innerHTML = `<p>result: <strong style="color:red;">${JSON.stringify(response.result)}</strong></p>`
+          }
+        }
+      }
+    }
+    submit.addEventListener('click', handleSubmit)
+  </script>
+</body>
+</html>

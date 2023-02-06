@@ -1,0 +1,9 @@
+version: '1'
+
+services:
+  ocr:
+    container_name: ocr
+    build: .
+    ports:
+      - "8089:8089"
+    restart: always
