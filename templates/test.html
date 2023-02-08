@@ -22,6 +22,7 @@
     <p>上传文件：<input type="file" id="image" name="image_body"></p>
     <p><button id="submit">提交</button></p>
     <div class="result"></div>
+    <img id="result_image" src="" />
   </div>
   <script>
     let submitDom = document.querySelector('#submit')
@@ -50,6 +51,7 @@
           }
           if (response.status === 'success') {
             resultDom.innerHTML = `<p>result: <strong style="color:red;">${JSON.stringify(response.result)}</strong></p>`
+            document.getElementById("result_image").src = response.img_detected;
           }
         }
       }
