@@ -1,0 +1,19 @@
+FROM paddlepaddle/paddle:2.4.1-gpu-cuda11.2-cudnn8.2-trt8.0
+ENV PYTHONUNBUFFERED 1
+
+COPY . /app/coral-ocr
+WORKDIR /app/coral-ocr
+RUN chmod -R 777 .
+
+RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN apt-get clean
+RUN apt-get update
+RUN apt-get -y upgrade
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
+RUN pip install --upgrade pip && pip --default-timeout=1000 install  -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+RUN pip install "paddleocr>=2.0.1" -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+ENTRYPOINT ["gunicorn","-c", "gunicorn.py", "app:app"]
