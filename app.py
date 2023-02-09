@@ -1,6 +1,7 @@
 from datetime import datetime
 from io import BytesIO
 import base64
+import traceback
 
 import cv2
 import numpy as np
@@ -74,7 +75,7 @@ def ocr_identify(image_path, words=None, is_second=False):
             boxes = [line[0] for r in result for line in r]
             txts = [line[1][0] for r in result for line in r]
             scores = [line[1][1] for r in result for line in r]
-            im_show = draw_ocr(image, boxes, txts, scores, font_path='doc/fonts/simfang.ttf')
+            im_show = draw_ocr(image, boxes, txts, scores, font_path='simfang.ttf')
             im_show = Image.fromarray(im_show)
 
             output_buffer = BytesIO()
@@ -84,6 +85,7 @@ def ocr_identify(image_path, words=None, is_second=False):
 
         return jsonify(result=box_list, status='success', img_detected=img_detected), 200
     except Exception as e:
+        print(traceback.format_exc())
         try:
             cv2.imwrite(f"{datetime.now().strftime('%m-%d-%H_%M_%S')}error.jpg", image_array)
         except Exception:
