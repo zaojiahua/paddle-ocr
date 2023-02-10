@@ -13,6 +13,6 @@ logfile = 'log/debug.log'
 errorlog = 'log/error.log'
 accesslog = 'log/access.log'
 
-workers = 1
+workers = 4
 
 x_forwarded_for_header = 'X-FORWARDED-FOR'
