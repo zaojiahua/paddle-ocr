@@ -46,6 +46,7 @@ def ocr():
 def ocr_identify(image_path, words=None, is_second=False):
     try:
         image = Image.open(image_path)
+        image = image.convert('RGB')
         image_array = np.array(image)
         # result, box_list = text_predict(image_array, searching_words=words, is_second=is_second)
         result = ocr_ch.ocr(image_array, cls=True)
