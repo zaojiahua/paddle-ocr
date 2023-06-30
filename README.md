@@ -95,6 +95,7 @@ print(ocr_request('picture.png').json())
 
 ## 部署
 docker build -t paddle-ocr:gpu -f Dockerfile_gpu .
+
 docker run -p 8091:8091 --gpus all --restart=always --name paddle-ocr -d paddle-ocr:gpu
 
 docker-compose up方法暂未成功。
