@@ -2,8 +2,8 @@ version: '3.3'
 
 services:
   ocr:
-    container_name: ocr
-    build: 
+    container_name: paddle-ocr
+    build:
       context: .
       dockerfile: Dockerfile_gpu
       args:
@@ -12,10 +12,7 @@ services:
     ports:
       - "8091:8091"
     restart: always
-    deploy: 
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: nvidia-smi

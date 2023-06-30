@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ocr",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/app.py",
+            "console": "integratedTerminal",
+            "env": {
+                "LD_LIBRARY_PATH": "/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/opt/ros/humble/lib/:${workspaceFolder}/install/abot_interfaces/lib",
+                "PATH": "/opt/ros/humble/bin:${env:PATH}",
+                "PYTHONPATH": "/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:${workspaceFolder}/src/heart:${workspaceFolder}/install/abot_interfaces/local/lib/python3.10/dist-packages"
+            }
+        }
+    ]
+}

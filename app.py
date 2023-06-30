@@ -59,7 +59,7 @@ def ocr_identify(image_path, words=None, is_second=False):
                 right_bottom = line[0][2]
                 text = line[1][0]
 
-                non_chinese_text = re.findall(r'[^\u4e00-\u9fa5]', text)
+                non_chinese_text = re.findall(r'[a-zA-Z0-9\s\.\,\!\?]', text)
                 text = "".join(non_chinese_text)
                 if text == '':
                     continue
