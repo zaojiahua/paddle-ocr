@@ -92,3 +92,9 @@ print(ocr_request('picture.png').json())
 1. ocr1: 8089
 2. ocr2: 8090
 3. ocr3: 8091（算法效果较好，支持中英文，部分客户没有部署）
+
+## 部署
+docker build -t paddle-ocr:gpu -f Dockerfile_gpu .
+docker run -p 8091:8091 --gpus all --restart=always --name paddle-ocr -d paddle-ocr:gpu
+
+docker-compose up方法暂未成功。
