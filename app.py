@@ -2,6 +2,7 @@ from datetime import datetime
 from io import BytesIO
 import base64
 import traceback
+import re
 
 import cv2
 import numpy as np
@@ -57,6 +58,12 @@ def ocr_identify(image_path, words=None, is_second=False):
                 left_top = line[0][0]
                 right_bottom = line[0][2]
                 text = line[1][0]
+
+                non_chinese_text = re.findall(r'[^\u4e00-\u9fa5]', text)
+                text = "".join(non_chinese_text)
+                if text == '':
+                    continue
+
                 box = {'text': text,
                        'cx': (left_top[0] + right_bottom[0]) / 2,
                        'cy': (left_top[1] + right_bottom[1]) / 2}
